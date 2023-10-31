@@ -9,7 +9,11 @@ export class User {
   @Exclude()
   password: string;
 
-  constructor(partial: Partial<User>) {
-    Object.assign(this, partial);
-  }
+  @Exclude()
+  refreshToken?: string;
+
+  @Exclude()
+  created_at: Date;
+  @Exclude()
+  updated_at: Date;
 }

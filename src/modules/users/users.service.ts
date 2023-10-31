@@ -1,53 +1,77 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from 'src/config/prisma/prisma.service';
-import { plainToInstance } from 'class-transformer';
-import { User } from './entities/user.entity';
+import { UsersRepository } from './repositories/users.repository';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async create(data: CreateUserDto) {
-    const findUser = await this.prisma.users
-      .findFirst({
-        where: {
-          OR: [{ username: data.username }, { email: data.email }],
-        },
-      })
+    const findUser = await this.usersRepository
+      .findByEmail(data.email)
       .catch(() => undefined);
 
     if (findUser) {
-      throw new BadRequestException(`User ${data.username} already exist!`, {
-        cause: new Error(), // Exemplo personalizado do erro
-        description: 'Bad Request User', // Exemplo personalizado do erro
-      });
+      throw new BadRequestException(`User ${data.email} already exist!`);
     }
-
-    const newUser = await this.prisma.users.create({
-      data: {
-        ...data,
-      },
+    const user = await this.usersRepository.create({
+      ...data,
     });
 
-    return plainToInstance(User, newUser);
+    return user;
   }
 
   async findAll() {
-    return `This action returns all users`;
+    return await this.usersRepository.findAll();
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} user`;
+    const findUser = await this.usersRepository.findOne(id);
+
+    if (!findUser) {
+      throw new NotFoundException(`User: ${id} not found!`);
+    }
+
+    return findUser;
+  }
+
+  async findByEmail(email: string) {
+    const findUser = await this.usersRepository.findByEmail(email);
+
+    if (!findUser) {
+      throw new NotFoundException(`Email: ${email} not found!`);
+    }
+
+    return findUser;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    const findUser = await this.usersRepository.update(id, updateUserDto);
+
+    if (!findUser) {
+      throw new NotFoundException(`User: ${id} not found!`);
+    }
+
+    return this.usersRepository.update(id, updateUserDto);
   }
 
   async remove(id: number) {
-    return `This action removes a #${id} user`;
+    const findUser = await this.usersRepository.findOne(id);
+
+    if (!findUser) {
+      throw new NotFoundException(`User: ${id} not found!`);
+    }
+
+    return this.usersRepository.delete(id);
   }
 }
