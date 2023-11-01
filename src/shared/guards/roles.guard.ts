@@ -18,6 +18,7 @@ export class RolesGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
     const { authorization } = context.switchToHttp().getRequest().headers;
 
     if (!authorization) {
@@ -31,6 +32,7 @@ export class RolesGuard implements CanActivate {
       })
       .catch(() => undefined);
     // console.log(loginPayload);
+    request['user'] = loginPayload;
 
     return true;
   }

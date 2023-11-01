@@ -8,6 +8,7 @@ import {
   Delete,
   ClassSerializerInterceptor,
   UseInterceptors,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -28,8 +29,9 @@ export class UsersController {
 
   @Get('profile')
   @UseGuards(RolesGuard)
-  async profile() {
-    return 'ok';
+  async profile(@Request() req) {
+    console.log(req.user);
+    return this.usersService.findOne(req.user.sub);
   }
 
   @Get()
