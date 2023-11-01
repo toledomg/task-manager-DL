@@ -40,14 +40,12 @@ model Task {
 }
 
 model TaskUser {
-  id Int @id @default(autoincrement())
-
+  id   Int   @id @default(autoincrement())
   task Task  @relation(fields: [task_id], references: [id])
   user Users @relation(fields: [users_id], references: [id])
 
-  task_id  Int
-  users_id Int
-
+  task_id    Int
+  users_id   Int
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 

@@ -1,26 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
+import { TaskRepository } from './repositories/tasks.repositoy';
 
 @Injectable()
 export class TasksService {
-  create(createTaskDto: CreateTaskDto) {
-    return 'This action adds a new task';
-  }
+  private readonly logger = new Logger(TasksService.name);
 
-  findAll() {
-    return `This action returns all tasks`;
-  }
+  constructor(private readonly taskRepository: TaskRepository) {}
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`;
-  }
-
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  create(data: CreateTaskDto) {
+    this.logger.log(`... Criando Task ...`, { ...data });
+    return this.taskRepository.create(data);
   }
 }
