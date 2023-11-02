@@ -24,6 +24,18 @@ export class UsersPrismaRepository implements UsersRepository {
 
     return plainToInstance(User, newUser);
   }
+
+  async uploadUserAvatar(id: number, path: string): Promise<void> {
+    await this.prisma.users.update({
+      data: {
+        avatarUrl: path,
+      },
+      where: {
+        id,
+      },
+    });
+  }
+
   async findAll(): Promise<User[]> {
     const users = await this.prisma.users.findMany();
 

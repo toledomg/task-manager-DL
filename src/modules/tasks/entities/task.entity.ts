@@ -4,6 +4,7 @@ export class Task {
   readonly id: number;
   title: string;
   description?: string;
+
   startAt?: Date;
   endAt?: Date;
   priority: string;

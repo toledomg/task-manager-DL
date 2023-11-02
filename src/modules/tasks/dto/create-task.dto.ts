@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { IsDate, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateTaskDto {
   userId: number;
@@ -10,12 +11,18 @@ export class CreateTaskDto {
   @IsString()
   description?: string;
 
-  @IsString()
-  // @IsNotEmpty({ message: 'Data Inicial é obrigatório.' })
+  @IsNotEmpty({ message: 'Data Inicial é obrigatório.' })
+  @Type(() => Date)
+  @Transform(({ value }) => value && value.toISOString(), { toPlainOnly: true })
+  @Transform(({ value }) => value && new Date(value), { toClassOnly: true })
+  @IsDate()
   startAt?: Date;
 
-  @IsString()
-  // @IsNotEmpty({ message: 'Data Final é obrigatório.' })
+  @IsNotEmpty({ message: 'Data Final é obrigatório.' })
+  @Type(() => Date)
+  @Transform(({ value }) => value && value.toISOString(), { toPlainOnly: true })
+  @Transform(({ value }) => value && new Date(value), { toClassOnly: true })
+  @IsDate()
   endAt?: Date;
 
   @IsString()
