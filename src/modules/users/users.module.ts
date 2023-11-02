@@ -5,6 +5,9 @@ import { PrismaService } from 'src/config/prisma/prisma.service';
 import { UsersPrismaRepository } from './repositories/users.prisma.repository';
 import { UsersRepository } from './repositories/users.repository';
 import { JwtService } from '@nestjs/jwt';
+import { UploadAvatarUsersService } from './users.upload-avatar.service';
+import { UploadUserStorage } from 'src/shared/storage/storage';
+import { SupabaStorage } from 'src/shared/storage/supabase.storage';
 
 @Module({
   imports: [],
@@ -12,8 +15,10 @@ import { JwtService } from '@nestjs/jwt';
   providers: [
     UsersService,
     PrismaService,
+    UploadAvatarUsersService,
     JwtService,
     { provide: UsersRepository, useClass: UsersPrismaRepository },
+    { provide: UploadUserStorage, useClass: SupabaStorage },
   ],
   exports: [UsersService],
 })
