@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { TaskPrismaRepository } from './repositories/tasks.prisma.repositoy';
-import { TaskRepository } from './repositories/tasks.repositoy';
+import { TaskRepository } from './repositories/tasks.repository';
 import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
 

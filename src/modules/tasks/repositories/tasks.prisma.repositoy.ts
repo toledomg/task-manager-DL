@@ -6,7 +6,7 @@ import {
   ResponseTaskDto,
   TaskNotificationDto,
 } from '../dto/create-task.dto';
-import { TaskRepository } from './tasks.repositoy';
+import { TaskRepository } from './tasks.repository';
 
 @Injectable()
 export class TaskPrismaRepository implements TaskRepository {
