@@ -11,7 +11,7 @@ export class ScheduleService {
     private taskRepository: TaskRepository,
     @Inject('NOTIFICATION') private readonly notificationClient: ClientProxy,
   ) {}
-  @Cron(CronExpression.EVERY_30_MINUTES)
+  @Cron(CronExpression.EVERY_12_HOURS)
   // @Cron('05 * * * * *')
   async getAllTaskDAy() {
     const allTasks = await this.taskRepository.findAllStartDay();
