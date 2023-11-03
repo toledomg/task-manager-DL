@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
-import { PrismaService } from 'src/config/prisma/prisma.service';
-import { UsersRepository } from '../users/repositories/users.repository';
-import { UsersPrismaRepository } from '../users/repositories/users.prisma.repository';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './strategies/local.strategy';
+import { UsersPrismaRepository } from '../users/repositories/users.prisma.repository';
+import { UsersRepository } from '../users/repositories/users.repository';
+import { UsersModule } from '../users/users.module';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 import { JwtStrategy, RefreshJwtStrategy } from './strategies';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
   imports: [UsersModule, PassportModule, JwtModule.register({})],
@@ -17,7 +16,6 @@ import { JwtStrategy, RefreshJwtStrategy } from './strategies';
     LocalStrategy,
     JwtStrategy,
     RefreshJwtStrategy,
-    PrismaService,
     {
       provide: UsersRepository,
       useClass: UsersPrismaRepository,
