@@ -79,10 +79,10 @@ export type TaskNotificationDto = {
 };
 
 export type NotificationMessageDto = {
+  name: string;
+  description: string;
   email: string;
   startAt: Date;
   endAt: Date;
-  name: string;
   title: string;
-  description: string;
 };
