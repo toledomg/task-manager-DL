@@ -37,3 +37,52 @@ export class CreateTaskDto {
 export class ResponseTaskDto {
   id: number;
 }
+
+export type TaskDTO = {
+  title: string;
+  description: string;
+  startAt: Date;
+  endAt: Date;
+};
+
+export type UserDTO = {
+  name: string;
+  username: string;
+  email: string;
+};
+
+// export type TaskNotificationDto = {
+//   id: number;
+//   task_id: number;
+//   created_at: Date;
+//   updated_at: Date;
+//   task: TaskDTO;
+//   user: UserDTO;
+// };
+
+export type TaskNotificationDto = {
+  id: number;
+  task_id: number;
+  created_at: Date;
+  updated_at: Date;
+  task: {
+    title: string;
+    description: string;
+    startAt: Date;
+    endAt: Date;
+  };
+  user: {
+    name: string;
+    username: string;
+    email: string;
+  };
+};
+
+export type NotificationMessageDto = {
+  email: string;
+  startAt: Date;
+  endAt: Date;
+  name: string;
+  title: string;
+  description: string;
+};
