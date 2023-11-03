@@ -1,17 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { ClientKafka } from '@nestjs/microservices';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { NotificationMessageDto } from 'src/modules/tasks/dto/create-task.dto';
-import { TaskRepository } from 'src/modules/tasks/repositories/tasks.repositoy';
+import { TaskRepository } from 'src/modules/tasks/repositories/tasks.repository';
 
 @Injectable()
 export class ScheduleService {
   constructor(
     private taskRepository: TaskRepository,
-    @Inject('NOTIFICATION') private readonly notificationClient: ClientProxy,
+    @Inject('NOTIFICATION') private readonly notificationClient: ClientKafka,
   ) {}
-  @Cron(CronExpression.EVERY_12_HOURS)
+  @Cron(CronExpression.EVERY_30_MINUTES)
   // @Cron('05 * * * * *')
   async getAllTaskDAy() {
     const allTasks = await this.taskRepository.findAllStartDay();
@@ -29,7 +28,7 @@ export class ScheduleService {
           title: task.task.title,
         };
 
-        this.notificationClient.emit('task_notification', message);
+        this.notificationClient.emit('tp_task_notification', message);
       });
     }
 
