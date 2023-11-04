@@ -1,23 +1,22 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  ClassSerializerInterceptor,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   Request,
   UseGuards,
-  ClassSerializerInterceptor,
   UseInterceptors,
 } from '@nestjs/common';
-import { ProductService } from './product.service';
+import { ApiBearerAuth, ApiProperty } from '@nestjs/swagger';
+import { RolesGuard } from 'src/shared/guards/roles.guard';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { RolesGuard } from 'src/shared/guards/roles.guard';
-import { ApiProperty, ApiBearerAuth } from '@nestjs/swagger';
 import { Product } from './entities/Product.entity';
-import { ProductDto } from './types/product.interfaces';
+import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {

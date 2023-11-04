@@ -1,7 +1,4 @@
-import {
-  CreateProductDto,
-  ResponseProductDto,
-} from '../dto/create-Product.dto';
+import { CreateProductDto } from '../dto/create-Product.dto';
 import { UpdateProductDto } from '../dto/update-Product.dto';
 import { Product } from '../entities/Product.entity';
 

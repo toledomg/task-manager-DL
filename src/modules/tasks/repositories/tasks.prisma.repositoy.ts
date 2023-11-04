@@ -1,14 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
 import { PrismaService } from 'src/config/prisma/prisma.service';
 import { endOfDay, startOfDay } from 'src/utils/date';
-import {
-  CreateTaskDto,
-  ResponseTaskDto,
-  TaskNotificationDto,
-} from '../dto/create-task.dto';
-import { TaskRepository } from './tasks.repository';
+import { CreateTaskDto, TaskNotificationDto } from '../dto/create-task.dto';
 import { Task } from '../entities/task.entity';
-import { plainToInstance } from 'class-transformer';
+import { TaskRepository } from './tasks.repository';
 
 @Injectable()
 export class TaskPrismaRepository implements TaskRepository {

@@ -2,8 +2,8 @@ import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { RolesGuard } from 'src/shared/guards/roles.guard';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { TasksService } from './tasks.service';
 import { Task } from './entities/task.entity';
+import { TasksService } from './tasks.service';
 
 @ApiTags('Tasks')
 @Controller('tasks')

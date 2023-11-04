@@ -1,8 +1,4 @@
-import {
-  CreateTaskDto,
-  ResponseTaskDto,
-  TaskNotificationDto,
-} from '../dto/create-task.dto';
+import { CreateTaskDto, TaskNotificationDto } from '../dto/create-task.dto';
 import { Task } from '../entities/task.entity';
 
 export abstract class TaskRepository {
