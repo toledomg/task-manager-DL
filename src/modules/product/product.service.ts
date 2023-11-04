@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductRepository } from './repositories/product.repository';
-import { Product } from './entities/Product.entity';
+import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductService {
