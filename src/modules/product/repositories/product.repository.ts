@@ -5,7 +5,8 @@ import { Product } from '../entities/Product.entity';
 export abstract class ProductRepository {
   abstract create(data: CreateProductDto): Promise<Product>;
   abstract findAll(): Promise<Product[]>;
-  abstract findOne(id: number): Promise<Product>;
+  abstract findByCode(code: string): Promise<Product>;
+  abstract findById(id: number): Promise<Product>;
   abstract update(id: number, data: UpdateProductDto): Promise<Product>;
   abstract delete(id: number): Promise<void>;
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductRepository } from './repositories/product.repository';
@@ -11,24 +11,35 @@ export class ProductService {
 
   constructor(private readonly productRepository: ProductRepository) {}
 
-  create(data: CreateProductDto): Promise<Product> {
-    this.logger.log(`... Criando Produto ...`, { ...data });
-    return this.productRepository.create(data);
+  async create(data: CreateProductDto): Promise<Product> {
+    const findProduct = await this.productRepository
+      .findByCode(data.code)
+      .catch(() => undefined);
+
+    if (findProduct) {
+      this.logger.log(`... Criando Produto ...`, { ...data });
+      throw new BadRequestException(`Product ${data.name} already exist!`);
+    }
+    const product = await this.productRepository.create(data);
+
+    return product;
   }
 
-  findAll() {
-    return this.productRepository.findAll();
+  async findAll() {
+    return await this.productRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findById(id: number) {
+    const findProduct = await this.productRepository.findById(id);
+
+    return findProduct;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
+  async update(id: number, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} product`;
   }
 }

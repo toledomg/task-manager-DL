@@ -27,13 +27,17 @@ export class ProductController {
   @ApiBearerAuth()
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
-  create(@Body() data: CreateProductDto, @Request() req): Promise<Product> {
+  async create(
+    @Body() data: CreateProductDto,
+    @Request() req,
+  ): Promise<Product> {
     const userId = req.user.sub;
-
-    return this.productService.create({
+    const product = await this.productService.create({
       ...data,
       userId,
     });
+
+    return product;
   }
 
   @Get()
@@ -42,8 +46,8 @@ export class ProductController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+  findById(@Param('id') id: string) {
+    return this.productService.findById(+id);
   }
 
   @Patch(':id')

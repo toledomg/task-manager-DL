@@ -14,23 +14,6 @@ import { plainToInstance } from 'class-transformer';
 export class ProductPrismaRepository implements ProductRepository {
   constructor(private prisma: PrismaService) {}
 
-  // async create(data: CreateProductDto): Promise<Product> {
-  //   return this.prisma.product.create({
-  //     data: {
-  //       name: data.name,
-  //       code: data.code,
-  //       description: data.description,
-  //       price: data.price,
-  //       quantity: data.quantity,
-  //       user: {
-  //         connect: {
-  //           id: data.userId,
-  //         },
-  //       },
-  //     },
-  //   });
-  // }
-
   async create(data: CreateProductDto): Promise<Product> {
     const product = new Product();
 
@@ -59,7 +42,14 @@ export class ProductPrismaRepository implements ProductRepository {
     return this.prisma.product.findMany();
   }
 
-  findOne(id: number): Promise<Product> {
+  findByCode(code: string): Promise<Product> {
+    const product = this.prisma.product.findFirst({
+      where: { code },
+    });
+    return product;
+  }
+
+  findById(id: number): Promise<Product> {
     throw new Error('Method not implemented.');
   }
 
