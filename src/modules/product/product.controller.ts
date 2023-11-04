@@ -15,7 +15,7 @@ import { Auth } from 'src/shared/decorators/auth.decorators';
 import { UserRole } from 'src/shared/decorators/user.enum';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product } from './entities/Product.entity';
+import { Product } from './entities/product.entity';
 import { ProductService } from './product.service';
 
 @Controller('product')
