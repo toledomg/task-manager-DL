@@ -9,6 +9,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './repositories/users.repository';
 import { JwtService } from '@nestjs/jwt';
+import { UserRole } from 'src/shared/decorators/user.enum';
 
 @Injectable()
 export class UsersService {
@@ -27,8 +28,12 @@ export class UsersService {
       this.logger.error(`User ${data.email} already exist!`, findUser);
       throw new BadRequestException(`User ${data.email} already exist!`);
     }
+
+    const roles = data.role ?? UserRole.User;
+
     const user = await this.usersRepository.create({
       ...data,
+      role: roles,
     });
 
     return user;
