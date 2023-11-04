@@ -25,6 +25,7 @@ model Users {
   created_at DateTime   @default(now())
   updated_at DateTime   @updatedAt
   TaskUser   TaskUser[]
+  Product    Product[]
 
   @@map("users")
 }
@@ -53,4 +54,22 @@ model TaskUser {
   updated_at DateTime @updatedAt
 
   @@map("tasks_users")
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+
+  name        String
+  code        String
+  description String
+  price       Int
+  quantity    Int
+
+  user Users @relation(fields: [users_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  users_id   Int
+
+  @@map("products")
 }

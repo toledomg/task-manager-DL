@@ -7,13 +7,21 @@ import {
   TaskNotificationDto,
 } from '../dto/create-task.dto';
 import { TaskRepository } from './tasks.repository';
+import { Task } from '../entities/task.entity';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class TaskPrismaRepository implements TaskRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateTaskDto): Promise<ResponseTaskDto> {
-    return this.prisma.taskUser.create({
+  async create(data: CreateTaskDto): Promise<Task> {
+    const task = new Task();
+
+    Object.assign(task, {
+      ...data,
+    });
+
+    const newTask = this.prisma.taskUser.create({
       data: {
         task: {
           create: {
@@ -32,6 +40,8 @@ export class TaskPrismaRepository implements TaskRepository {
         },
       },
     });
+
+    return plainToInstance(Task, newTask);
   }
 
   async findAllStartDay(): Promise<TaskNotificationDto[] | null> {

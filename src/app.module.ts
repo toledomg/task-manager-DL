@@ -5,15 +5,16 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ScheduleTaskModule } from './modules/jobs/schedule/schedule.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { UsersModule } from './modules/users/users.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
     PrismaModule,
     UsersModule,
     AuthModule,
-    JwtModule,
     TasksModule,
     ScheduleTaskModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [],
