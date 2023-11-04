@@ -17,12 +17,15 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/Product.entity';
 import { ProductService } from './product.service';
+import { Roles } from 'src/shared/decorators/roles.decorator';
+import { UserRole } from 'src/shared/decorators/user.enum';
 
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @ApiProperty()
+  @Roles(UserRole.Admin)
   @UseGuards(RolesGuard)
   @ApiBearerAuth()
   @UseInterceptors(ClassSerializerInterceptor)
@@ -31,12 +34,12 @@ export class ProductController {
     @Body() data: CreateProductDto,
     @Request() req,
   ): Promise<Product> {
+    console.log(req.user);
     const userId = req.user.sub;
     const product = await this.productService.create({
       ...data,
       userId,
     });
-
     return product;
   }
 
