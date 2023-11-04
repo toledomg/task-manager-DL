@@ -5,7 +5,7 @@ CREATE TABLE "users" (
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "role" TEXT NOT NULL,
+    "role" TEXT,
     "avatarUrl" TEXT,
     "refresh_token" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -38,6 +38,21 @@ CREATE TABLE "tasks_users" (
     CONSTRAINT "tasks_users_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "products" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "code" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "price" INTEGER NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "users_id" INTEGER NOT NULL,
+
+    CONSTRAINT "products_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
 
@@ -49,3 +64,6 @@ ALTER TABLE "tasks_users" ADD CONSTRAINT "tasks_users_task_id_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "tasks_users" ADD CONSTRAINT "tasks_users_users_id_fkey" FOREIGN KEY ("users_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "products" ADD CONSTRAINT "products_users_id_fkey" FOREIGN KEY ("users_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

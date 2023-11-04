@@ -1,16 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { IsInt, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateProductDto {
   userId: number;
 
   @ApiProperty()
   @IsString()
+  @IsNotEmpty({ message: 'Nome é Obrigatório.' })
   name: string;
 
   @ApiProperty()
   @IsString()
+  @IsNotEmpty({ message: 'Código Produto é Obrigatório.' })
   code: string;
 
   @ApiProperty()
@@ -19,6 +21,7 @@ export class CreateProductDto {
 
   @ApiProperty()
   @IsInt()
+  @IsNotEmpty({ message: 'Preço é Obrigatório.' })
   price: number;
 
   @ApiProperty()
