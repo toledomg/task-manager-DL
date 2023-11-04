@@ -41,13 +41,8 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   @ApiProperty()
-  create(
-    @Body() createUserDto: CreateUserDto,
-    userRole: UserRole,
-  ): Promise<User> {
-    console.log(userRole);
-
-    return this.usersService.create(createUserDto, userRole);
+  create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.usersService.create(createUserDto);
   }
 
   @Get('profile')

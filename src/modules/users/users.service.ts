@@ -19,7 +19,7 @@ export class UsersService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async create(data: CreateUserDto, userRole?: UserRole) {
+  async create(data: CreateUserDto) {
     const findUser = await this.usersRepository
       .findByEmail(data.email)
       .catch(() => undefined);
@@ -29,7 +29,7 @@ export class UsersService {
       throw new BadRequestException(`User ${data.email} already exist!`);
     }
 
-    const roles = data.role || UserRole.User;
+    const roles = data.role ?? UserRole.User;
 
     const user = await this.usersRepository.create({
       ...data,
