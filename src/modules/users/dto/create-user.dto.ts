@@ -28,7 +28,8 @@ export class CreateUserDto {
   password: string;
 
   @IsString()
-  role: string;
+  @IsOptional()
+  role?: string;
 
   @ApiProperty({
     // description: `RefreshToken for update token`,

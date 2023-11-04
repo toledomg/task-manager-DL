@@ -28,6 +28,7 @@ import { UploadFileUserDto } from './dto/upload-file-user.dto';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 import { UploadAvatarUsersService } from './users.upload-avatar.service';
+import { UserRole } from 'src/shared/decorators/user.enum';
 
 @ApiTags('Users')
 @Controller('users')
@@ -40,8 +41,13 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   @ApiProperty()
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.usersService.create(createUserDto);
+  create(
+    @Body() createUserDto: CreateUserDto,
+    userRole: UserRole,
+  ): Promise<User> {
+    console.log(userRole);
+
+    return this.usersService.create(createUserDto, userRole);
   }
 
   @Get('profile')
