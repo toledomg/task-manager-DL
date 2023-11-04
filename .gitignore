@@ -4,6 +4,7 @@
 
 .lock
 .env
+roles.guard copy.ts
 
 # Logs
 logs
