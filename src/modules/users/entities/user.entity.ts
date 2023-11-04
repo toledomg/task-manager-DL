@@ -9,6 +9,8 @@ export class User {
   @Exclude()
   password: string;
 
+  role: string;
+
   @Exclude()
   refreshToken?: string;
 
