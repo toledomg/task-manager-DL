@@ -8,25 +8,23 @@ import {
   Patch,
   Post,
   Request,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiProperty } from '@nestjs/swagger';
-import { RolesGuard } from 'src/shared/guards/roles.guard';
+import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
+import { Auth } from 'src/shared/decorators/auth.decorators';
+import { UserRole } from 'src/shared/decorators/user.enum';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/Product.entity';
 import { ProductService } from './product.service';
-import { Roles } from 'src/shared/decorators/roles.decorator';
-import { UserRole } from 'src/shared/decorators/user.enum';
 
 @Controller('product')
+@ApiTags('Products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Auth(UserRole.Admin)
   @ApiProperty()
-  @Roles(UserRole.Admin)
-  @UseGuards(RolesGuard)
   @ApiBearerAuth()
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
@@ -43,21 +41,30 @@ export class ProductController {
     return product;
   }
 
+  @Auth(UserRole.User)
+  @ApiProperty()
+  @ApiBearerAuth()
   @Get()
   findAll() {
     return this.productService.findAll();
   }
 
+  @ApiProperty()
+  @ApiBearerAuth()
   @Get(':id')
   findById(@Param('id') id: string) {
     return this.productService.findById(+id);
   }
 
+  @ApiProperty()
+  @ApiBearerAuth()
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productService.update(+id, updateProductDto);
   }
 
+  @ApiProperty()
+  @ApiBearerAuth()
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productService.remove(+id);

@@ -18,10 +18,10 @@ import { RolesGuard } from './shared/guards/roles.guard';
   ],
   controllers: [],
   providers: [
-    {
-      provide: 'APP_GUARD',
-      useClass: RolesGuard,
-    },
+    // {
+    //   provide: 'APP_GUARD',
+    //   useClass: RolesGuard,
+    // },
   ],
 })
 export class AppModule {}
