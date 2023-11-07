@@ -1,11 +1,20 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './modules/users/users.module';
+import { PrismaModule } from './config/prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { JwtModule } from '@nestjs/jwt';
+import { ScheduleTaskModule } from './modules/jobs/schedule/schedule.module';
+import { ProductModule } from './modules/product/product.module';
+import { TasksModule } from './modules/tasks/tasks.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({}), UsersModule, AuthModule, JwtModule],
+  imports: [
+    PrismaModule,
+    UsersModule,
+    AuthModule,
+    TasksModule,
+    ScheduleTaskModule,
+    ProductModule,
+  ],
   controllers: [],
   providers: [],
 })

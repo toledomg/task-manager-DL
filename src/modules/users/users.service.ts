@@ -3,14 +3,17 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  Logger,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './repositories/users.repository';
 import { JwtService } from '@nestjs/jwt';
+import { UserRole } from 'src/shared/decorators/user.enum';
 
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger(UsersService.name); // Gerar log no terminal
   constructor(
     private readonly usersRepository: UsersRepository,
     private readonly jwtService: JwtService,
@@ -22,10 +25,15 @@ export class UsersService {
       .catch(() => undefined);
 
     if (findUser) {
+      this.logger.error(`User ${data.email} already exist!`, findUser);
       throw new BadRequestException(`User ${data.email} already exist!`);
     }
+
+    const roles = data.role ?? UserRole.User;
+
     const user = await this.usersRepository.create({
       ...data,
+      role: roles,
     });
 
     return user;
@@ -37,7 +45,6 @@ export class UsersService {
 
   async findOne(id: number) {
     const findUser = await this.usersRepository.findOne(id);
-    console.log(findUser);
 
     if (!findUser) {
       throw new NotFoundException(`User: ${id} not found!`);

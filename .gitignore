@@ -2,7 +2,9 @@
 /dist
 /node_modules
 
-#.env
+.lock
+.env
+roles.guard copy.ts
 
 # Logs
 logs

@@ -37,11 +37,21 @@ export class AuthService {
 
     const [token, refreshToken] = await Promise.all([
       this.jwtService.sign(
-        { sub: users.id, username: users.username, email: users.email },
+        {
+          sub: users.id,
+          username: users.username,
+          email: users.email,
+          role: users.role,
+        },
         { secret: jwtConstants.secret, expiresIn: '30m' },
       ),
       this.jwtService.sign(
-        { sub: users.id, username: users.username, email: users.email },
+        {
+          sub: users.id,
+          username: users.username,
+          email: users.email,
+          role: users.role,
+        },
         { secret: RefreshJwtConstants.secret, expiresIn: '4h' },
       ),
     ]);
