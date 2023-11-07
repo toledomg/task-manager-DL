@@ -25,8 +25,6 @@ export class RolesGuard implements CanActivate {
       [context.getHandler(), context.getClass()],
     );
 
-    console.log(requiredRoles);
-
     if (!requiredRoles) {
       return true;
     }
@@ -37,7 +35,6 @@ export class RolesGuard implements CanActivate {
     if (!authorization) {
       throw new UnauthorizedException('Token not Found');
     }
-    // console.log(authorization);
 
     try {
       const loginPayload: LoginPayload | undefined = await this.jwtService
@@ -45,7 +42,6 @@ export class RolesGuard implements CanActivate {
           secret: jwtConstants.secret,
         })
         .catch(() => undefined);
-      // console.log(loginPayload);
 
       request['user'] = loginPayload;
 
@@ -54,7 +50,5 @@ export class RolesGuard implements CanActivate {
     } catch (error) {
       throw new UnauthorizedException('Token not Found');
     }
-
-    // return false;
   }
 }
