@@ -10,7 +10,7 @@ export class ScheduleService {
     private taskRepository: TaskRepository,
     @Inject('NOTIFICATION') private readonly notificationClient: ClientKafka,
   ) {}
-  @Cron(CronExpression.EVERY_30_MINUTES)
+  @Cron(CronExpression.EVERY_DAY_AT_10AM)
   // @Cron('05 * * * * *')
   async getAllTaskDAy() {
     const allTasks = await this.taskRepository.findAllStartDay();
@@ -31,7 +31,5 @@ export class ScheduleService {
         this.notificationClient.emit('tp_task_notification', message);
       });
     }
-
-    // console.log(allTasks);
   }
 }

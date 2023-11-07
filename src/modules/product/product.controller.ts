@@ -32,7 +32,6 @@ export class ProductController {
     @Body() data: CreateProductDto,
     @Request() req,
   ): Promise<Product> {
-    console.log(req.user);
     const userId = req.user.sub;
     const product = await this.productService.create({
       ...data,
