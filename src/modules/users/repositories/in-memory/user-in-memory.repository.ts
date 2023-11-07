@@ -26,10 +26,6 @@ export class UserInMemoryRepository implements UsersRepository {
   async findByEmail(email: string): Promise<User | null> {
     const findUser = this.users.find((user) => user.email === email);
 
-    // if (findUser) {
-    //   throw new BadRequestException(`User ${findUser.email} already exist!`);
-    // }
-
     return findUser ?? null;
   }
 

@@ -46,7 +46,6 @@ export class RolesGuard implements CanActivate {
       request['user'] = loginPayload;
 
       return requiredRoles.some((role) => loginPayload.role.includes(role));
-      //
     } catch (error) {
       throw new UnauthorizedException('Token not Found');
     }

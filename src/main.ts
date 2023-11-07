@@ -10,9 +10,9 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('API Task Manager in NEST')
-    .setDescription('Curso nest Danielle Leão de gerenciamento de usuário')
+    .setDescription('Aplicação para gerenciamento de tarefas')
     .setVersion('1.0')
-    .addTag('Curso Dani')
+    .addTag('Task-Manager')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
