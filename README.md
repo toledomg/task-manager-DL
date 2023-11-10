@@ -72,7 +72,7 @@
 
 ## 💫 Links
 
-- API: `https://task-manager-api-tpso.onrender.com`
+- API: `Offline`
 
 ## 🚚 Documentação API / Rotas da Aplicação
 
